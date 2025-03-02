@@ -24,11 +24,6 @@ jobs:
           chmod +x Godot_v4.3-stable_linux.x86_64
           sudo mv Godot_v4.3-stable_linux.x86_64 /usr/local/bin/godot
 
-      - name: Собрать игру "Colin Dash" для Windows
-        run: |
-          mkdir -p build/windows
-          godot --headless --export-release "Windows Desktop" build/windows/colin-dash.exe
-
       - name: Собрать игру "Colin Dash" для Linux
         run: |
           mkdir -p build/linux
