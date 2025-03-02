@@ -50,10 +50,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Загрузить в GitHub Packages
-        run: |
-          echo "${{ secrets.BOT_ZOTOV }}" | gh auth login --with-token
-          gh release upload latest build/linux/colin-dash.x86_64
+      - name: Опубликовать в GitHub Releases
+        uses: softprops/action-gh-release@v1
+        with:
+          name: "Latest Linux Build"
+          tag_name: latest
+          body: "Автоматическая сборка игры Colin Dash для Linux"
+          files: build/linux/colin-dash.x86_64
         env:
           GITHUB_TOKEN: ${{ secrets.BOT_ZOTOV }}
 
