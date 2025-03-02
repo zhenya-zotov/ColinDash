@@ -29,13 +29,13 @@ jobs:
           mv ~/.local/share/godot/export_templates/templates/* ~/.local/share/godot/export_templates/4.3.stable/
           ls -lah ~/.local/share/godot/export_templates/4.3.stable/
 
-      - name: Собрать игру "Colin Dash" для Linux
+      - name: Собрать игру "Coin Dash" для Linux
         run: |
           mkdir -p build/linux
           godot --headless --export-release "Linux" build/linux/colin-dash.x86_64
 
       - name: Установить права 777 для colin-dash.x86_64
-        run: chmod 777 build/linux/colin-dash.x86_64
+        run: chmod -R 777 build/linux/colin-dash.x86_64
 
       - name: Загружать артефакты сборки
         uses: actions/upload-artifact@v4
@@ -46,7 +46,7 @@ jobs:
       - name: Опубликовать в GitHub Releases
         uses: softprops/action-gh-release@v1
         with:
-          name: "Latest Linux Build"
+          name: "Coin Dash"
           tag_name: latest
           body: "Автоматическая сборка игры Colin Dash для Linux"
           files: build/linux/colin-dash.x86_64
