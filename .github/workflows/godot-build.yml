@@ -28,7 +28,8 @@ jobs:
         run: |
           mkdir -p ~/.local/share/godot/export_templates/4.3.stable/
           wget https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_export_templates.tpz
-          unzip -o Godot_v4.3-stable_export_templates.tpz -d ~/.local/share/godot/export_templates/4.3.stable/
+          unzip Godot_v4.3-stable_export_templates.tpz -d ~/.local/share/godot/export_templates/
+          mv ~/.local/share/godot/export_templates/templates/* ~/.local/share/godot/export_templates/4.3.stable/
           ls -lah ~/.local/share/godot/export_templates/4.3.stable/
 
       - name: Собрать игру "Colin Dash" для Linux
