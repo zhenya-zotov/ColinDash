@@ -1,0 +1,42 @@
+name: Colin Dash - Godot Build
+
+on:
+  push:
+    branches:
+      - main  # Запуск при пуше в main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:  # Позволяет запускать вручную через GitHub Actions UI
+
+jobs:
+  export_game:
+    runs-on: ubuntu-latest  # Запускаем на Ubuntu
+
+    steps:
+      - name: Checkout репозиторий
+        uses: actions/checkout@v3
+
+      - name: Установить Godot
+        uses: barichello/godot-ci@v4
+        with:
+          version: "4.2.1"  # Укажите версию Godot (например, 4.2.1)
+          export_presets: "export_presets.cfg"  # Файл настроек экспорта
+          cache: true  # Включаем кэширование
+
+      - name: Собрать игру "Colin Dash" для Windows
+        run: |
+          mkdir -p build/windows
+          godot --headless --export-release "Windows Desktop" build/windows/colindash.exe
+
+      - name: Собрать игру "Colin Dash" для Linux
+        run: |
+          mkdir -p build/linux
+          godot --headless --export-release "Linux/X11" build/linux/colindash.x86_64
+
+      - name: Загружать артефакты сборки
+        uses: actions/upload-artifact@v3
+        with:
+          name: colin-dash-build
+          path: build/
+
