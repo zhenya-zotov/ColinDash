@@ -1,4 +1,4 @@
-name: Colin Dash - Godot Build
+name: Colin Dash - Godot 4.3 Build
 
 on:
   push:
@@ -11,31 +11,30 @@ on:
 
 jobs:
   export_game:
-    runs-on: ubuntu-latest  # Запускаем на Ubuntu
+    runs-on: ubuntu-latest  # Используем Ubuntu
 
     steps:
       - name: Checkout репозиторий
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4  # Обновляем версию checkout
 
-      - name: Установить Godot
-        uses: barichello/godot-ci@v4
+      - name: Установить Godot 4.3
+        uses: tzachshabtay/godot-ci@v1
         with:
-          version: "4.2.1"  # Укажите версию Godot (например, 4.2.1)
+          version: "4.3"  # Указываем версию Godot 4.3
           export_presets: "export_presets.cfg"  # Файл настроек экспорта
-          cache: true  # Включаем кэширование
 
       - name: Собрать игру "Colin Dash" для Windows
         run: |
           mkdir -p build/windows
-          godot --headless --export-release "Windows Desktop" build/windows/colindash.exe
+          godot --headless --export-release "Windows Desktop" build/windows/colin-dash.exe
 
       - name: Собрать игру "Colin Dash" для Linux
         run: |
           mkdir -p build/linux
-          godot --headless --export-release "Linux/X11" build/linux/colindash.x86_64
+          godot --headless --export-release "Linux/X11" build/linux/colin-dash.x86_64
 
       - name: Загружать артефакты сборки
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4  # Обновляем версию
         with:
           name: colin-dash-build
           path: build/
