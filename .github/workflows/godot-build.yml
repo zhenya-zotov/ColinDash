@@ -1,21 +1,21 @@
-name: Colin Dash - Godot 4.3 Build
+name: Colin Dash - Godot 4.3 Build (Linux only)
 
 on:
   push:
     branches:
-      - main  # Запуск при пуше в main
+      - main
   pull_request:
     branches:
       - main
-  workflow_dispatch:  # Позволяет запускать вручную через GitHub Actions UI
+  workflow_dispatch:
 
 jobs:
   export_game:
-    runs-on: ubuntu-latest  # Используем Ubuntu
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout репозиторий
-        uses: actions/checkout@v4  # Обновляем версию checkout
+        uses: actions/checkout@v4
 
       - name: Установить Godot 4.3
         run: |
@@ -24,14 +24,20 @@ jobs:
           chmod +x Godot_v4.3-stable_linux.x86_64
           sudo mv Godot_v4.3-stable_linux.x86_64 /usr/local/bin/godot
 
+      - name: Установить экспортные шаблоны для Godot 4.3
+        run: |
+          mkdir -p ~/.local/share/godot/export_templates/4.3.stable/
+          wget https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_export_templates.tpz
+          unzip Godot_v4.3-stable_export_templates.tpz -d ~/.local/share/godot/export_templates/4.3.stable/
+
       - name: Собрать игру "Colin Dash" для Linux
         run: |
           mkdir -p build/linux
           godot --headless --export-release "Linux" build/linux/colin-dash.x86_64
 
       - name: Загружать артефакты сборки
-        uses: actions/upload-artifact@v4  # Обновляем версию
+        uses: actions/upload-artifact@v4
         with:
-          name: colin-dash-build
+          name: colin-dash-linux
           path: build/
 
