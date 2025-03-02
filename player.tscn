@@ -78,7 +78,7 @@ script = ExtResource("1_7fdil")
 position = Vector2(14, 12)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_8k2jc")
-animation = &"hurt"
+animation = &"idle"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
