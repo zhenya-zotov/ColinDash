@@ -43,16 +43,6 @@ jobs:
       - name: Опубликовать в GitHub Releases
         uses: softprops/action-gh-release@v1
         with:
-          files: build/linux/colin-dash.x86_64
-          tag_name: latest
-          release_name: "Latest Linux Build"
-          body: "Автоматическая сборка игры Colin Dash для Linux"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Опубликовать в GitHub Releases
-        uses: softprops/action-gh-release@v1
-        with:
           name: "Latest Linux Build"
           tag_name: latest
           body: "Автоматическая сборка игры Colin Dash для Linux"
