@@ -15,6 +15,7 @@ var playing = false
 func _ready() -> void:
 	screensize = get_viewport().get_visible_rect().size
 	$Player.screensize = screensize
+	$MainSound.play()
 	$Player.hide()
 
 
@@ -32,6 +33,8 @@ func new_game():
 	level = 1
 	score = 0
 	time_left = playtime
+	$MainSound.stop()
+	$BackgroundSound.play()
 	$Player.start()
 	$Player.show()
 	$GameTimer.start()
@@ -83,11 +86,13 @@ func spawn_cactus():
 func game_over():
 	playing = false
 	$GameTimer.stop()
+	$BackgroundSound.stop()
 	$EndSound.play()
 	get_tree().call_group("coins", "queue_free")
 	get_tree().call_group("obstacles", "queue_free")
 	$HUD.show_game_over()
 	$Player.die()
+	$MainSound.play()
 		
 func _on_game_timer_timeout():
 	time_left -= 1
