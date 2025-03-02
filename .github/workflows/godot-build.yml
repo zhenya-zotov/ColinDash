@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
   workflow_dispatch:
 
 jobs:
@@ -24,7 +21,7 @@ jobs:
           chmod +x Godot_v4.3-stable_linux.x86_64
           sudo mv Godot_v4.3-stable_linux.x86_64 /usr/local/bin/godot
 
-      - name: Установить экспортные шаблоны для Godot 4.3
+      - name: Установить экспортные шаблоны
         run: |
           mkdir -p ~/.local/share/godot/export_templates/4.3.stable/
           wget https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_export_templates.tpz
@@ -42,4 +39,21 @@ jobs:
         with:
           name: colin-dash-linux
           path: build/
+
+      - name: Опубликовать в GitHub Releases
+        uses: softprops/action-gh-release@v1
+        with:
+          files: build/linux/colin-dash.x86_64
+          tag_name: latest
+          release_name: "Latest Linux Build"
+          body: "Автоматическая сборка игры Colin Dash для Linux"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Загрузить в GitHub Packages
+        run: |
+          echo "${{ secrets.BOT_ZOTOV }}" | gh auth login --with-token
+          gh release upload latest build/linux/colin-dash.x86_64
+        env:
+          GITHUB_TOKEN: ${{ secrets.BOT_ZOTOV }}
 
